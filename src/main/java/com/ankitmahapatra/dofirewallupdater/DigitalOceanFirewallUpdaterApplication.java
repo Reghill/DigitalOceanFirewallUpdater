@@ -1,5 +1,10 @@
 package com.ankitmahapatra.dofirewallupdater;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.Scanner;
+
 public class DigitalOceanFirewallUpdaterApplication {
     
     public static void main(String[] args){
@@ -8,19 +13,14 @@ public class DigitalOceanFirewallUpdaterApplication {
     	System.out.println(" Starting with firewall update ...");
     }
     
-    private String getMyPublicIPAddress() throws UnknownHostException
-        {
-            String host = "https://api.ipify.org/";
-
+   private String getMyPublicIPAddress() throws UnknownHostException {
+            String ipify = "https://api.ipify.org/";
             try {
-                InetAddress ip = InetAddress.getByName(new URL(host)
-                        .getHost());
-
-               return String.valueOf(ip);
-            }
-            catch (MalformedURLException e) {
-                System.out.println("Invalid URL");
+               Scanner scanner = new Scanner(new URL(ipify).openStream(), "UTF-8").useDelimiter("\\A");
+               return scanner.next();
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
             return "";
-        }
+    }
 }
